@@ -3,10 +3,15 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Line;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Text;
+use Leadmarvels\TextList\TextList;
 
 class User extends Resource
 {
@@ -44,17 +49,40 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Gravatar::make()->maxWidth(50),
+            Heading::make('<p class="text-danger">* All fields are required.</p>')->asHtml(),
 
             Text::make('Name')
+                ->displayUsing(function () {
+                    return view('heroes.cap')
+                        ->withResource($this->resource)
+                        ->render();
+                })
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->asHtml(),
 
-            Text::make('Email')
+            Stack::make('Details', [
+
+                Line::make('Name')
+                    ->asHeading()
+                    ->rules('required', 'max:255'),
+
+                Line::make('Email')
+                    ->asSubTitle()
+                    ->extraClasses('cursor-pointer text-primary')
+                    ->sortable()
+                    ->rules('required', 'email', 'max:254')
+                    ->creationRules('unique:users,email')
+                    ->updateRules('unique:users,email,{{resourceId}}'),
+
+            ]),
+
+            Text::make('Roles')
+                ->displayUsing(function ($value) {
+                    return Str::limit($value, 30);
+                })
                 ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+                ->rules('max:100'),
 
             Password::make('Password')
                 ->onlyOnForms()

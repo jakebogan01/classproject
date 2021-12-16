@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9c0f187e06bb79ea00ce3a337017b18",
+    "content-hash": "d479abc2f0eced7190a41f988298f77a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2000,6 +2000,42 @@
                 "source": "https://github.com/laravel/ui/tree/v3.4.0"
             },
             "time": "2021-11-30T16:22:00+00:00"
+        },
+        {
+            "name": "leadmarvels/text-list",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/TextList",
+                "reference": "9be25931a1e452fe126bee28c2d58cf3be90361e"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Leadmarvels\\TextList\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Leadmarvels\\TextList\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "league/commonmark",

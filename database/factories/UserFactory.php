@@ -23,6 +23,15 @@ class UserFactory extends Factory
         ];
     }
 
+    public function withRoles()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'roles' => implode(',', $this->faker->words(40)),
+            ];
+        });
+    }
+
     /**
      * Indicate that the model's email address should be unverified.
      *
